@@ -1,0 +1,9 @@
+# Build Artifacts
+.pio/
+.vscode/
+build/
+sdkconfig
+sdkconfig.old
+firmware.bin
+firmware.elf
+
