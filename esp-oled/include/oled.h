@@ -24,7 +24,6 @@ void oled_init(void);
 void fb_clear(void);
 void fb_draw_string(int x, int page, const char *str);
 void fb_draw_bitmap(int x, int y, int w, int h, const uint8_t *bitmap);
-void fb_draw_sprite(int x, int y, int w, int h, const uint8_t *bitmap);
 void fb_draw_fullscreen(const uint8_t *bitmap);
 void oled_flush(void);
 

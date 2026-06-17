@@ -187,33 +187,6 @@ void fb_draw_bitmap(int x, int y, int w, int h, const uint8_t *bitmap)
             uint8_t src = bitmap[col + p * w];
 
             if (bit_off == 0) {
-                fb[tp * OLED_WIDTH + px] = src;
-            } else {
-                fb[tp * OLED_WIDTH + px] = (uint8_t)(src << bit_off);
-                if (tp + 1 < OLED_PAGES)
-                    fb[(tp + 1) * OLED_WIDTH + px] = (uint8_t)(src >> (8 - bit_off));
-            }
-        }
-    }
-}
-
-void fb_draw_sprite(int x, int y, int w, int h, const uint8_t *bitmap)
-{
-    int start_page = y / 8;
-    int bit_off    = y % 8;
-    int bmp_pages  = (h + 7) / 8;
-
-    for (int col = 0; col < w; col++) {
-        int px = x + col;
-        if (px < 0 || px >= OLED_WIDTH) continue;
-
-        for (int p = 0; p < bmp_pages; p++) {
-            int tp = start_page + p;
-            if (tp < 0 || tp >= OLED_PAGES) continue;
-
-            uint8_t src = bitmap[col + p * w];
-
-            if (bit_off == 0) {
                 fb[tp * OLED_WIDTH + px] |= src;
             } else {
                 fb[tp * OLED_WIDTH + px] |= (uint8_t)(src << bit_off);
