@@ -1,5 +1,6 @@
 #include "oled.h"
 #include "bitmaps.h"
+#include "ds18b20.h"
 
 static const char *TAG = "oled";
 
@@ -22,11 +23,28 @@ static void draw_skull(void) {
     oled_flush();
 }
 
+
 void app_main(void)
 {
+    static int temp_str_size = 32 + 8;
+    char temp_str[temp_str_size];
+    
+    ds18b20_init();
     oled_init();
     // show_hello_world();
-    // draw_skull();
-    fb_draw_bitmap(5, 5, 28, 28, temperature_bitmap);
-    oled_flush();
+    // draw_skull();    
+    fb_draw_bitmap(5, 5, 28, 28, temperature_bitmap);    
+    float temp;
+
+    for (;;) {
+        vTaskDelay(pdMS_TO_TICKS(1000));
+        esp_err_t err = ds18b20_read_temperature(&temp);
+        if (err != ESP_OK) {
+            printf("failed to read temperature: %d", err);
+        }
+        ESP_LOGI(TAG, "temperature: %f", temp);    
+        snprintf(temp_str, temp_str_size, "%.2f Celsius", temp);
+        fb_draw_string(40, 4, temp_str);
+        oled_flush();
+    }
 }

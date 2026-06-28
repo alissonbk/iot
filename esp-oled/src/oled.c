@@ -230,11 +230,11 @@ void oled_init(void)
     i2c_master_init();
 
     ESP_LOGI(TAG, "Initialising SSD1306 OLED …");
-    oled_send_cmd(init_seq, sizeof(init_seq));
+    oled_send_cmd(init_seq, sizeof(init_seq));    
     fb_clear();
-    oled_flush();
+    oled_flush();    
     vTaskDelay(pdMS_TO_TICKS(20));
-    fb_clear();
+    fb_clear();    
 }
 
 /* ════════════════════════════════════════════════════════════════════════════
